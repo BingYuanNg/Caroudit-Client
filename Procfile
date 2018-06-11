@@ -1,1 +1,1 @@
-npm run build
+web: node server.js NODE_ENV=production

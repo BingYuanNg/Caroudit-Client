@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack -p --mode production",
-    "start": "npm run build && webpack-dev-server --mode production --host 0.0.0.0 --port 5000"
+    "start": "npm run build && webpack-dev-server --mode production --host 0.0.0.0 --port 5000",
+    "prod": "NODE_ENV=production node server.js",
+    "postinstall": "webpack --config webpack.prod.config.js -p --progress --colors"
   },
   "keywords": [],
   "author": "BingYuan",
