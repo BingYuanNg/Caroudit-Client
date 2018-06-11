@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack -p --mode production",
-    "start": "webpack-dev-server --mode production --host 0.0.0.0 --port 5000"
+    "start": "npm run build && webpack-dev-server --mode production --host 0.0.0.0 --port 5000"
   },
   "keywords": [],
   "author": "BingYuan",
