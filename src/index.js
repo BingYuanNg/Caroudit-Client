@@ -2,17 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Switch } from 'react-router';
 import {createBrowserHistory} from 'history';
+import dotenv from 'dotenv'
 
-import Login from './js/containers/Login';
-import Feed from './js/containers/Feed';
+
+import Home from './js/containers/Home';
 
 const App = () => {
 let browserHistory = createBrowserHistory();
 	return (
 		<Router history={browserHistory}>
 			<Switch>
-				<Route exact path="/" component={Login}/>
-				<Route exact path="/feed" component={Feed}/>
+				<Route exact path="/" component={Home}/>
 			</Switch>
 		</Router>
 	)
