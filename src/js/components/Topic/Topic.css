@@ -1,0 +1,40 @@
+.topic {
+	padding:10px;
+}
+.topic-content {
+	width: 80% ;
+	float:left;
+}
+.topic-title {
+	font-size: 18px;
+	padding: 10px 0;
+}
+.topic-date {
+	font-size: 12px;
+}
+.topic-votes{
+	position:absolute;
+	font-size: 1.75em;
+}
+
+.upvote {
+	color:green;
+}
+.downvote {
+	color:red;
+}
+.topic-votes i {
+	margin-left: 5px;
+	margin-right: 5px;
+	line-height: 1.75em;
+}
+.topic-detail {
+	margin-left:100px;
+	width:100%;
+	display:inline-block;
+}
+.topic-delete {
+	color: brown;
+	width: 100%;
+	font-size:1.5em;
+}
