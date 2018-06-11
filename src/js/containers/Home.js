@@ -11,23 +11,34 @@ class Home extends Component {
   constructor() {
     super()
     this.state = {
+      offset: 1,
+      limit: 10,
+      paging: {},
       input: {},
       list : [],
       top  : [],
       message: "",
+      now_showing: 'top'
     };
 
     this.refreshList = this.refreshList.bind(this);
+    this.refreshLookup = this.refreshLookup.bind(this);
+
     this._onChange = this._onChange.bind(this);
     this._onSubmit = this._onSubmit.bind(this);
     this._onDeleteTopic = this._onDeleteTopic.bind(this);
     this._onUpvoteTopic = this._onUpvoteTopic.bind(this);
     this._onDownvoteTopic = this._onDownvoteTopic.bind(this);
+    this._onSetOffsetLimit = this._onSetOffsetLimit.bind(this);
   }
 
   componentDidMount(){
     this.refreshList()
     this.refreshLookup()
+  }
+
+  changeList(item){
+    this.setState({now_showing:item})
   }
 
   refreshList(offset=1,limit=10) {
@@ -40,6 +51,10 @@ class Home extends Component {
     getTop()
       .then(res=> { this.setState({top:res})} )
       .catch(err => alert(err));
+  }
+
+  _onSetOffsetLimit(input){
+    this.setState({offset:input.offset, limit:input.limit});  
   }
 
   _onChange(input){
