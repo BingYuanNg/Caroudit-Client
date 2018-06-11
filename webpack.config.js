@@ -37,6 +37,9 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
   },
+  entry: [
+    './src/index'
+  ],
   plugins: [
     new HtmlWebPackPlugin({
       template: "./src/index.html",
