@@ -17,11 +17,29 @@ class Home extends Component {
       message: "",
     };
 
+    this.refreshList = this.refreshList.bind(this);
     this._onChange = this._onChange.bind(this);
     this._onSubmit = this._onSubmit.bind(this);
-   }
+    this._onDeleteTopic = this._onDeleteTopic.bind(this);
+    this._onUpvoteTopic = this._onUpvoteTopic.bind(this);
+    this._onDownvoteTopic = this._onDownvoteTopic.bind(this);
+  }
 
   componentDidMount(){
+    this.refreshList()
+    this.refreshLookup()
+  }
+
+  refreshList(offset=1,limit=10) {
+    getTopicList({offset: offset, limit: limit })
+      .then(res=> { this.setState({list:res.result, paging:res.paging })} )
+      .catch(err => alert(err));
+  }
+
+  refreshLookup(offset=1,limit=10) {
+    getTop()
+      .then(res=> { this.setState({top:res})} )
+      .catch(err => alert(err));
   }
 
   _onChange(input){
@@ -38,11 +56,43 @@ class Home extends Component {
       .catch(err => alert(err))
   }
 
+  _onDeleteTopic(id){
+    deleteTopic(id)
+      .then(res=> this.setState({message:'Topic Deleted'}))
+      .then(this.refreshList(this.state.offset, this.state.limit))
+      .then(this.refreshLookup())
+      .catch(err=>alert(err))
+  }
+  _onUpvoteTopic(id){
+    upvoteTopic(id)
+      .then(res=> this.setState({message:'Upvoted'}))
+      .then(this.refreshList(this.state.offset, this.state.limit))
+      .then(this.refreshLookup())
+      .catch(err => alert(err))
+  }
+  _onDownvoteTopic(id){
+    downvoteTopic(id)
+      .then(res=> this.setState({message:'Downvoted'}))
+      .then(this.refreshList(this.state.offset, this.state.limit))
+      .then(this.refreshLookup())
+      .catch(err => alert(err))
+  }
 
   render() {
-    const {input, list, top, message} = this.state;
-   var listing, button, title
-    
+    const {input, list, top, message, paging, offset, limit} = this.state;
+    const {now_showing} = this.state;
+    var listing, button, title
+    if(now_showing =="top"){
+      listing = <TopicList
+        items={top}
+        type='top'
+        onDelete={this._onDeleteTopic}
+        onUpvote={this._onUpvoteTopic}
+        onDownvote={this._onDownvoteTopic}
+      />
+      button = <button type="button" onClick={this.changeList.bind(this,'list')}>Get Recent</button>
+      title = "Top 20" 
+    }else{
       listing = <TopicList
         paging={paging}
         items={list}
@@ -55,6 +105,7 @@ class Home extends Component {
         onDownvote={this._onDownvoteTopic}
         refreshList={this.refreshList}
 
+      />
       button = <button type="button" onClick={this.changeList.bind(this,'top')}>Top 20</button>
       title = "Recent"
     }
@@ -65,7 +116,11 @@ class Home extends Component {
           input={input}
           onChange={this._onChange}
           onSubmit={this._onSubmit}
+          onDelete={this._onDeleteTopic}
+          onUpvote={this._onUpvoteTopic}
+          onDownvote={this._onDownvoteTopic}
         />
+        {button}
         <center><h2>{title}</h2></center>
         {listing}
       </div>
