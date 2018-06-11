@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import css from './TopicForm.css'
+export default class TopicForm extends Component {
 
-export default class LoginForm extends Component {
-	
 	static propTypes = {
 		input 		: PropTypes.object.isRequired,
 		onChange 	: PropTypes.func.isRequired,
@@ -18,19 +18,16 @@ export default class LoginForm extends Component {
 		const {input} = this.props;
 		return (
 			<div>
-				<input 
-					type="text" 
-					value={input['username'] || ''} 
-					name="username"
+				<input
+					class="input_box"
+					type="text"
+					value={input['topic'] || ''}
+					name="topic"
 					onChange={this._onChange}
+					maxlength="255"
 				/>
-				<input 
-					type="password" 
-					value={input['password'] || ''} 
-					name="password"
-					onChange={this._onChange}			
-				/>
-				<input type="submit" value="Login"/>
+				<div>Number of characters : { (input['topic'] || "").length }</div>
+				<input type="button" value="Post" onClick={this.props.onSubmit}/>
 			</div>
 		)
 	}
@@ -41,4 +38,5 @@ export default class LoginForm extends Component {
 
         this.props.onChange(input);
     }
+
 }
